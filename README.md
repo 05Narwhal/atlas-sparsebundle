@@ -2,10 +2,44 @@
 
 [![crates.io](https://img.shields.io/crates/v/atlas-sparsebundle.svg)](https://crates.io/crates/atlas-sparsebundle) [![docs.rs](https://img.shields.io/docsrs/atlas-sparsebundle)](https://docs.rs/atlas-sparsebundle) [![CI](https://github.com/05Narwhal/atlas-sparsebundle/actions/workflows/ci.yml/badge.svg)](https://github.com/05Narwhal/atlas-sparsebundle/actions/workflows/ci.yml) ![License](https://img.shields.io/crates/l/atlas-sparsebundle.svg)
 
-Opens Apple sparse bundles (a folder of band files with an `Info.plist`) and single-file `.sparseimage` images as a `BlockSource`. Bands that were never written read as zeros.
+**Open Apple sparse bundles and sparse images as a plain `BlockSource`.**
 
+Time Machine backups and encrypted containers on a Mac are often `.sparsebundle` folders, and older tools produce single-file `.sparseimage` images. `atlas-sparsebundle` presents the disk inside either one as a `BlockSource`.
+
+## Features
+
+- **`.sparsebundle`**: a folder with an `Info.plist` and a `bands` folder of band files.
+- **`.sparseimage`**: a single file with a sparse image header.
+- Bands that were never written read as zeros.
 - Band maps and sizes from `Info.plist` and the sparse image header are validated before use.
-- No `unsafe`. Every length, offset and count read from the disk is checked; damage is an error, not a panic.
+
+## Quick start
+
+```rust,no_run
+use std::path::Path;
+
+use atlas_fs_core::io::block::BlockSource;
+
+let bundle = atlas_sparsebundle::sparsebundle::open(Path::new("Backup.sparsebundle"))?;
+let image = atlas_sparsebundle::sparseimage::open(Path::new("Backup.sparseimage"))?;
+println!("{} and {} bytes of disk", bundle.len(), image.len());
+```
+
+The two modules are `sparsebundle` and `sparseimage`. The result is a `BlockSource`, ready for `atlas-partition` and the filesystem readers.
+
+Builds on `atlas-dmg` for its property list parser.
+
+## Safety and robustness
+
+- **No `unsafe`.** The crate is `#![forbid(unsafe_code)]`.
+- **On-disk bytes are hostile.** Every length, offset and count read from a disk is validated before use. Damage is returned as an error, never a panic, an unchecked index or an unbounded loop.
+- **Lints enforce it.** Clippy's `indexing_slicing`, `arithmetic_side_effects`, `unwrap_used`, `expect_used` and `panic` lints are on for the library code.
+- **Read-only.** Nothing in this crate writes to a disk or image.
+- **Fuzzed.** A `cargo-fuzz` target in `fuzz/` runs the parser on arbitrary bytes.
+
+## Feature flags
+
+- `test-util`: exposes the synthetic test image builders and fuzz seed inputs this crate's own tests use, for tests of crates built on it. It is not part of the stable API.
 
 ## Install
 
@@ -14,7 +48,9 @@ Opens Apple sparse bundles (a folder of band files with an `Info.plist`) and sin
 atlas-sparsebundle = "26.0.1-a"
 ```
 
-Minimum supported Rust version: 1.88.
+Versions follow `26.MAJOR.MINOR-STAGE`: the year, the major and minor version, and a stage letter (`a` alpha, `b` beta, `s` stable). Cargo treats a stage suffix as a pre-release, so name the version exactly as above.
+
+Minimum supported Rust version: 1.88 (edition 2024).
 
 ## Licence
 
