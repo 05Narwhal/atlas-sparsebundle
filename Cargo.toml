@@ -6,6 +6,7 @@ rust-version = "1.88"
 license = "MIT OR Apache-2.0"
 description = "Read Apple sparse bundle and sparse image disk images."
 repository = "https://github.com/05Narwhal/atlas-sparsebundle"
+homepage = "https://julianloy.com"
 readme = "README.md"
 keywords = ["sparsebundle", "sparseimage", "disk-image", "macos", "parser"]
 categories = ["filesystem", "parser-implementations"]
