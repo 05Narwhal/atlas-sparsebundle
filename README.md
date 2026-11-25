@@ -1,6 +1,6 @@
 # atlas-sparsebundle
 
-<!-- badges -->[![crates.io](https://img.shields.io/crates/v/atlas-sparsebundle.svg)](https://crates.io/crates/atlas-sparsebundle) [![docs.rs](https://img.shields.io/docsrs/atlas-sparsebundle)](https://docs.rs/atlas-sparsebundle) [![CI](https://github.com/05Narwhal/atlas-sparsebundle/actions/workflows/ci.yml/badge.svg)](https://github.com/05Narwhal/atlas-sparsebundle/actions/workflows/ci.yml) ![License](https://img.shields.io/crates/l/atlas-sparsebundle.svg)
+[![crates.io](https://img.shields.io/crates/v/atlas-sparsebundle.svg)](https://crates.io/crates/atlas-sparsebundle) [![docs.rs](https://img.shields.io/docsrs/atlas-sparsebundle)](https://docs.rs/atlas-sparsebundle) [![CI](https://github.com/05Narwhal/atlas-sparsebundle/actions/workflows/ci.yml/badge.svg)](https://github.com/05Narwhal/atlas-sparsebundle/actions/workflows/ci.yml) ![License](https://img.shields.io/crates/l/atlas-sparsebundle.svg)
 
 Opens Apple sparse bundles (a folder of band files with an `Info.plist`) and single-file `.sparseimage` images as a `BlockSource`. Bands that were never written read as zeros.
 
