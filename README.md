@@ -11,7 +11,7 @@ Opens Apple sparse bundles (a folder of band files with an `Info.plist`) and sin
 
 ```toml
 [dependencies]
-atlas-sparsebundle = "0.1"
+atlas-sparsebundle = "26.0.1-a"
 ```
 
 Minimum supported Rust version: 1.88.
